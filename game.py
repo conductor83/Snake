@@ -1,68 +1,49 @@
 import turtle
 import time
 import random
-
-sprite_size = 16  # pixel
-field_height = 40  # cells
-field_width = 40  # cells
-
-x = field_height // 2
-y = field_width // 2
-vx = 0
-vy = 0
-
+import globals
+from border import draw_border
 
 def move():
-    global x
-    global y
-
-    x = x + vx
-    y = y + vy
+    globals.x = globals.x + globals.vx
+    globals.y = globals.y + globals.vy
 
 
 # Functions
 def go_up():
-    global vy, vx
-    vy = 1
-    vx = 0
+    globals.vy = 1
+    globals.vx = 0
 
 
 def go_down():
-    global vy, vx
-    vy = -1
-    vx = 0
+    globals.vy = -1
+    globals.vx = 0
 
 
 def go_left():
-    global vy, vx
-    vy = 0
-    vx = -1
+    globals.vy = 0
+    globals.vx = -1
 
 
 def go_right():
-    global vy, vx
-    vy = 0
-    vx = 1
+    globals.vy = 0
+    globals.vx = 1
 
 
 def check_gameover():
-    global x, y
-    global field_width, field_height
+    ## x, y
+    # field_width, field_height
 
     return False
 
-
 def start_game():
-    global x
-    global y
-
     # Set up the screen
     screen = turtle.Screen()
 
-    screen.title("Snake Game by @TokyoEdTech")
+    screen.title("Snake Game by Katya")
 
     screen.bgcolor("green")
-    screen.setup(width=sprite_size * field_width, height=sprite_size * field_height)
+    screen.setup(width=globals.sprite_size * (globals.field_width)-globals.sprite_size//2, height=globals.sprite_size * (globals.field_height)-globals.sprite_size//2)
     screen.tracer(0)  # Turns off the screen updates
 
     # Snake head
@@ -71,6 +52,7 @@ def start_game():
     head.penup()
     head.color("red")
 
+    # keyboard settings
     screen.onkeypress(go_up, "w")
     screen.onkeypress(go_down, "s")
     screen.onkeypress(go_left, "a")
@@ -84,6 +66,8 @@ def start_game():
     screen.onkeypress(go_left, "Left")
     screen.onkeypress(go_right, "Right")
     screen.listen()
+
+    draw_border()
 
     while True:
         # дали экрану нарисовать себя, а клавишщам сработать
@@ -106,8 +90,7 @@ def start_game():
             return
 
         # поменяли вид экрана
-        head.goto((x - field_width // 2) * sprite_size,
-                  (y - field_height // 2) * sprite_size)
+        head.goto(globals.calc_gx(globals.x),globals.calc_gy(globals.y))
 
         # ждем секунду
         time.sleep(1)
