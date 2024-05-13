@@ -75,6 +75,14 @@ def start_game():
     screen.onkeypress(go_down, "s")
     screen.onkeypress(go_left, "a")
     screen.onkeypress(go_right, "d")
+    # screen.onkeypress(go_up, "ц")
+    # screen.onkeypress(go_down, "ы")
+    # screen.onkeypress(go_left, "ф")
+    # screen.onkeypress(go_right, "в")
+    screen.onkeypress(go_up, "Up")
+    screen.onkeypress(go_down, "Down")
+    screen.onkeypress(go_left, "Left")
+    screen.onkeypress(go_right, "Right")
     screen.listen()
 
     while True:
