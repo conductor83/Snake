@@ -31,8 +31,11 @@ def go_right():
 
 
 def check_gameover():
-    ## x, y
-    # field_width, field_height
+    if globals.x==-1 or globals.x == globals.field_width:
+        return True
+    if globals.y == -1 or globals.y == globals.field_height:
+        return True
+
 
     return False
 
@@ -43,7 +46,7 @@ def start_game():
     screen.title("Snake Game by Katya")
 
     screen.bgcolor("green")
-    screen.setup(width=globals.sprite_size * (globals.field_width)-globals.sprite_size//2, height=globals.sprite_size * (globals.field_height)-globals.sprite_size//2)
+    screen.setup(width=globals.yacheika_size * (globals.field_width) - globals.yacheika_size // 2, height=globals.yacheika_size * (globals.field_height) - globals.yacheika_size // 2)
     screen.tracer(0)  # Turns off the screen updates
 
     # Snake head
@@ -79,6 +82,7 @@ def start_game():
         # проерили, что игра продолжается
         game_over = check_gameover()
         if game_over:
+            time.sleep(1)
             message = turtle.Turtle()
             message.color("white")
             message.penup()
@@ -93,6 +97,6 @@ def start_game():
         head.goto(globals.calc_gx(globals.x),globals.calc_gy(globals.y))
 
         # ждем секунду
-        time.sleep(1)
+        time.sleep(0.3)
 
     screen.mainloop()

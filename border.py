@@ -21,3 +21,4 @@ def draw_border():
         border.goto(globals.calc_gx(globals.field_width-1), globals.calc_gy(y))
         border.setheading(0)
         border.stamp()
+
