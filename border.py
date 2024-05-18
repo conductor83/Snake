@@ -1,5 +1,5 @@
 import turtle
-import globals
+import doska
 
 
 def draw_border():
@@ -8,17 +8,17 @@ def draw_border():
     border.penup()
     border.color("white")
 
-    for x in range(0,globals.field_width):
-        border.goto(globals.calc_gx(x), globals.calc_gy(0))
+    for x in range(0,doska.field_width):
+        border.goto(doska.calc_gx(x), doska.calc_gy(0))
         border.stamp()
-        border.goto(globals.calc_gx(x), globals.calc_gy(globals.field_height-1))
+        border.goto(doska.calc_gx(x), doska.calc_gy(doska.field_height-1))
         border.stamp()
 
-    for y in range(0,globals.field_height):
-        border.goto(globals.calc_gx(0), globals.calc_gy(y))
+    for y in range(0,doska.field_height):
+        border.goto(doska.calc_gx(0), doska.calc_gy(y))
         border.setheading(180)
         border.stamp()
-        border.goto(globals.calc_gx(globals.field_width-1), globals.calc_gy(y))
+        border.goto(doska.calc_gx(doska.field_width-1), doska.calc_gy(y))
         border.setheading(0)
         border.stamp()
 

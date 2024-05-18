@@ -1,39 +1,24 @@
 import turtle
 import time
 import random
-import globals
+import doska
 from border import draw_border
+from keyboard import setup_keyboard
+
 
 def move():
-    globals.x = globals.x + globals.vx
-    globals.y = globals.y + globals.vy
+    doska.x = doska.x + doska.vx
+    doska.y = doska.y + doska.vy
 
 
 # Functions
-def go_up():
-    globals.vy = 1
-    globals.vx = 0
 
-
-def go_down():
-    globals.vy = -1
-    globals.vx = 0
-
-
-def go_left():
-    globals.vy = 0
-    globals.vx = -1
-
-
-def go_right():
-    globals.vy = 0
-    globals.vx = 1
 
 
 def check_gameover():
-    if globals.x==-1 or globals.x == globals.field_width:
+    if doska.x==-1 or doska.x == doska.field_width:
         return True
-    if globals.y == -1 or globals.y == globals.field_height:
+    if doska.y == -1 or doska.y == doska.field_height:
         return True
 
 
@@ -46,7 +31,7 @@ def start_game():
     screen.title("Snake Game by Katya")
 
     screen.bgcolor("green")
-    screen.setup(width=globals.yacheika_size * (globals.field_width) - globals.yacheika_size // 2, height=globals.yacheika_size * (globals.field_height) - globals.yacheika_size // 2)
+    screen.setup(width=doska.yacheika_size * (doska.field_width) - doska.yacheika_size // 2, height=doska.yacheika_size * (doska.field_height) - doska.yacheika_size // 2)
     screen.tracer(0)  # Turns off the screen updates
 
     # Snake head
@@ -55,20 +40,7 @@ def start_game():
     head.penup()
     head.color("red")
 
-    # keyboard settings
-    screen.onkeypress(go_up, "w")
-    screen.onkeypress(go_down, "s")
-    screen.onkeypress(go_left, "a")
-    screen.onkeypress(go_right, "d")
-    # screen.onkeypress(go_up, "ц")
-    # screen.onkeypress(go_down, "ы")
-    # screen.onkeypress(go_left, "ф")
-    # screen.onkeypress(go_right, "в")
-    screen.onkeypress(go_up, "Up")
-    screen.onkeypress(go_down, "Down")
-    screen.onkeypress(go_left, "Left")
-    screen.onkeypress(go_right, "Right")
-    screen.listen()
+    setup_keyboard()
 
     draw_border()
 
@@ -94,7 +66,7 @@ def start_game():
             return
 
         # поменяли вид экрана
-        head.goto(globals.calc_gx(globals.x),globals.calc_gy(globals.y))
+        head.goto(doska.calc_gx(doska.x),doska.calc_gy(doska.y))
 
         # ждем секунду
         time.sleep(0.3)
