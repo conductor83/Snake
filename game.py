@@ -13,9 +13,9 @@ def move():
 # Functions
 
 def check_gameover():
-    if doska.x == -1 or doska.x == doska.field_width:
+    if doska.x == 0 or doska.x == doska.field_width-1:
         return True
-    if doska.y == -1 or doska.y == doska.field_height:
+    if doska.y == 0 or doska.y == doska.field_height-1:
         return True
 
     return False
@@ -47,6 +47,12 @@ def start_game():
         ## посчитали новое положение головы
         move()
 
+        # поменяли вид экрана
+        pygame.draw.circle(game_window, "red", doska.calc_gpos(doska.x, doska.y), doska.yacheika_size/2)
+
+        # Refresh game screen
+        pygame.display.update()
+
         # проверили, что игра продолжается
         game_over = check_gameover()
         if game_over:
@@ -62,12 +68,6 @@ def start_game():
 
             time.sleep(3)
             running = False
-
-        # поменяли вид экрана
-        pygame.draw.circle(game_window, "red", doska.calc_gpos(doska.x, doska.y), doska.yacheika_size/2)
-
-        # Refresh game screen
-        pygame.display.update()
 
         clock.tick(2)  # limits FPS
 
