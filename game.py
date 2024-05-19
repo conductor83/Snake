@@ -1,9 +1,8 @@
-import turtle
 import time
-import random
+import pygame
 import doska
 from border import draw_border
-from keyboard import setup_keyboard
+from keyboard import process_key
 
 
 def move():
@@ -13,62 +12,63 @@ def move():
 
 # Functions
 
-
-
 def check_gameover():
-    if doska.x==-1 or doska.x == doska.field_width:
+    if doska.x == -1 or doska.x == doska.field_width:
         return True
     if doska.y == -1 or doska.y == doska.field_height:
         return True
 
-
     return False
 
+
 def start_game():
+    pygame.init()
+
     # Set up the screen
-    screen = turtle.Screen()
+    pygame.display.set_caption('Snake Game by Katya')
+    game_window = pygame.display.set_mode((doska.window_size_x, doska.window_size_y))
+    clock = pygame.time.Clock()
 
-    screen.title("Snake Game by Katya")
+    game_window.fill("green")
 
-    screen.bgcolor("green")
-    screen.setup(width=doska.yacheika_size * (doska.field_width) - doska.yacheika_size // 2, height=doska.yacheika_size * (doska.field_height) - doska.yacheika_size // 2)
-    screen.tracer(0)  # Turns off the screen updates
+    draw_border(game_window)
 
-    # Snake head
-    head = turtle.Turtle()
-    head.shape("circle")  # turtle
-    head.penup()
-    head.color("red")
+    running = True
+    while running:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+            if event.type == pygame.KEYDOWN:
+                process_key(event.key)
 
-    setup_keyboard()
+        #стираем голову в старом месте
+        pygame.draw.circle(game_window, "green", doska.calc_gpos(doska.x, doska.y), doska.yacheika_size / 2)
 
-    draw_border()
-
-    while True:
-        # дали экрану нарисовать себя, а клавишщам сработать
-        screen.update()
-
-        ## посчитали
+        ## посчитали новое положение головы
         move()
 
-        # проерили, что игра продолжается
+        # проверили, что игра продолжается
         game_over = check_gameover()
         if game_over:
             time.sleep(1)
-            message = turtle.Turtle()
-            message.color("white")
-            message.penup()
-            message.hideturtle()
-            message.goto(0, 0)
-            message.write("Game OVER", font=("Arial", 28, "normal"))
 
-            screen.mainloop()
-            return
+            my_font = pygame.font.SysFont('times new roman', 50)
+            game_over_surface = my_font.render('Game OVER', True, 'red')
+            game_over_rect = game_over_surface.get_rect()
+            game_over_rect.midtop = (doska.window_size_x / 2, doska.window_size_y / 4)
+            game_window.blit(game_over_surface, game_over_rect)
+
+            pygame.display.flip()
+
+            time.sleep(3)
+            running = False
 
         # поменяли вид экрана
-        head.goto(doska.calc_gx(doska.x),doska.calc_gy(doska.y))
+        pygame.draw.circle(game_window, "red", doska.calc_gpos(doska.x, doska.y), doska.yacheika_size/2)
 
-        # ждем секунду
-        time.sleep(0.3)
+        # Refresh game screen
+        pygame.display.update()
 
-    screen.mainloop()
+        clock.tick(2)  # limits FPS
+
+    pygame.quit()

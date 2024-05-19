@@ -1,4 +1,4 @@
-import turtle
+import pygame
 
 import doska
 
@@ -21,19 +21,14 @@ def go_left():
 def go_right():
     doska.vy = 0
     doska.vx = 1
-def setup_keyboard():
-    # keyboard settings
-    screen = turtle.Screen()
-    screen.onkeypress(go_up, "w")
-    screen.onkeypress(go_down, "s")
-    screen.onkeypress(go_left, "a")
-    screen.onkeypress(go_right, "d")
-    # screen.onkeypress(go_up, "ц")
-    # screen.onkeypress(go_down, "ы")
-    # screen.onkeypress(go_left, "ф")
-    # screen.onkeypress(go_right, "в")
-    screen.onkeypress(go_up, "Up")
-    screen.onkeypress(go_down, "Down")
-    screen.onkeypress(go_left, "Left")
-    screen.onkeypress(go_right, "Right")
-    screen.listen()
+
+
+def process_key(key):
+    if key == pygame.K_UP or key == pygame.K_w:
+        go_up()
+    if key == pygame.K_DOWN or key == pygame.K_s:
+        go_down()
+    if key == pygame.K_LEFT or key == pygame.K_a:
+        go_left()
+    if key == pygame.K_RIGHT or key == pygame.K_d:
+        go_right()
