@@ -1,4 +1,4 @@
-yacheika_size = 21  # pixel
+yacheika_size = 16  # pixel
 
 field_height = 25  # cells
 field_width = 25  # cells
