@@ -1,3 +1,7 @@
+from enum import Enum
+
+import pygame
+
 yacheika_size = 16  # pixel
 
 field_height = 25  # cells
@@ -11,6 +15,35 @@ vy = 0
 window_size_x = yacheika_size * (field_width-1)
 window_size_y = yacheika_size * (field_height-1)
 
+pygame.init()
+
+# Set up the screen
+pygame.display.set_caption('Snake Game by Katya')
+game_window = pygame.display.set_mode((window_size_x, window_size_y))
+
+class CellType(Enum):
+    Empty = 0
+    Zabor = 1
+    Head = 2
+    Body = 3
+    Rabbit = 4
+
+field= [[CellType.Empty]*field_width]*field_height
+
+def putObject (x: int,y:int,celltype: CellType):
+    field[x][y]=celltype
+
+    match celltype:
+        case CellType.Empty:
+            pygame.draw.circle(game_window, "green", calc_gpos(x, y), yacheika_size / 2)
+        case CellType.Zabor:
+            pygame.draw.circle(game_window, "white", calc_gpos(x, y), yacheika_size / 2)
+        case CellType.Head:
+            pygame.draw.circle(game_window, "red", calc_gpos(x, y), yacheika_size/2)
+        case CellType.Body:
+            pygame.draw.circle(game_window, "orange", calc_gpos(x, y), yacheika_size / 2)
+        case CellType.Rabbit:
+            pygame.draw.circle(game_window, "gray", calc_gpos(x, y), yacheika_size / 2)
 
 def calc_gx(doska_x):
     return doska_x * yacheika_size

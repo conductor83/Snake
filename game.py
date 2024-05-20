@@ -22,16 +22,12 @@ def check_gameover():
 
 
 def start_game():
-    pygame.init()
 
-    # Set up the screen
-    pygame.display.set_caption('Snake Game by Katya')
-    game_window = pygame.display.set_mode((doska.window_size_x, doska.window_size_y))
     clock = pygame.time.Clock()
 
-    game_window.fill("green")
+    doska.game_window.fill("green")
 
-    draw_border(game_window)
+    draw_border()
 
     running = True
     while running:
@@ -42,13 +38,15 @@ def start_game():
                 process_key(event.key)
 
         #стираем голову в старом месте
-        pygame.draw.circle(game_window, "green", doska.calc_gpos(doska.x, doska.y), doska.yacheika_size / 2)
+        doska.putObject(doska.x,doska.y, doska.CellType.Empty)
+
 
         ## посчитали новое положение головы
         move()
 
         # поменяли вид экрана
-        pygame.draw.circle(game_window, "red", doska.calc_gpos(doska.x, doska.y), doska.yacheika_size/2)
+        doska.putObject(doska.x, doska.y, doska.CellType.Head)
+
 
         # Refresh game screen
         pygame.display.update()
@@ -62,7 +60,7 @@ def start_game():
             game_over_surface = my_font.render('Game OVER', True, 'red')
             game_over_rect = game_over_surface.get_rect()
             game_over_rect.midtop = (doska.window_size_x / 2, doska.window_size_y / 4)
-            game_window.blit(game_over_surface, game_over_rect)
+            doska.game_window.blit(game_over_surface, game_over_rect)
 
             pygame.display.flip()
 
