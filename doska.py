@@ -12,14 +12,15 @@ y = field_width // 2
 vx = 0
 vy = 0
 
-window_size_x = yacheika_size * (field_width-1)
-window_size_y = yacheika_size * (field_height-1)
+window_size_x = yacheika_size * (field_width - 1)
+window_size_y = yacheika_size * (field_height - 1)
 
 pygame.init()
 
 # Set up the screen
 pygame.display.set_caption('Snake Game by Katya')
 game_window = pygame.display.set_mode((window_size_x, window_size_y))
+
 
 class CellType(Enum):
     Empty = 0
@@ -28,10 +29,16 @@ class CellType(Enum):
     Body = 3
     Rabbit = 4
 
-field= [[CellType.Empty]*field_width]*field_height
 
-def putObject (x: int,y:int,celltype: CellType):
-    field[x][y]=celltype
+field = [[CellType.Empty] * field_width for i in range(field_height)]
+
+
+def putObject(x: int, y: int, celltype: CellType):
+    if x < 0 or x > field_width-1:
+        raise Exception("Неверная координата х")
+    if y < 0 or y > field_height-1:
+        raise Exception("Неверная координата y")
+    field[x][y] = celltype
 
     match celltype:
         case CellType.Empty:
@@ -39,11 +46,12 @@ def putObject (x: int,y:int,celltype: CellType):
         case CellType.Zabor:
             pygame.draw.circle(game_window, "white", calc_gpos(x, y), yacheika_size / 2)
         case CellType.Head:
-            pygame.draw.circle(game_window, "red", calc_gpos(x, y), yacheika_size/2)
+            pygame.draw.circle(game_window, "red", calc_gpos(x, y), yacheika_size / 2)
         case CellType.Body:
             pygame.draw.circle(game_window, "orange", calc_gpos(x, y), yacheika_size / 2)
         case CellType.Rabbit:
             pygame.draw.circle(game_window, "gray", calc_gpos(x, y), yacheika_size / 2)
+
 
 def calc_gx(doska_x):
     return doska_x * yacheika_size

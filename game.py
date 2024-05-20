@@ -1,4 +1,6 @@
 import time
+from random import random, randint
+
 import pygame
 import doska
 from border import draw_border
@@ -13,12 +15,25 @@ def move():
 # Functions
 
 def check_gameover():
-    if doska.x == 0 or doska.x == doska.field_width-1:
-        return True
-    if doska.y == 0 or doska.y == doska.field_height-1:
-        return True
+    celltype = doska.field[doska.x][doska.y]
 
-    return False
+    match celltype:
+        case doska.CellType.Zabor:
+           return True
+        case doska.CellType.Head:
+            raise Exception("Какая-то шняга с головой")
+        case doska.CellType.Body:
+            return True
+        case doska.CellType.Rabbit:
+            while True:
+                x= randint(1,doska.field_width-2)
+                y=randint(1,doska.field_height-2)
+                if doska.field[x][y] ==doska.CellType.Empty:
+                    doska.putObject(x,y,doska.CellType.Rabbit)
+                    break
+        case _: #то же, что else
+            return False
+
 
 
 def start_game():
@@ -28,6 +43,9 @@ def start_game():
     doska.game_window.fill("green")
 
     draw_border()
+
+    doska.putObject(9,10,doska.CellType.Rabbit)
+    doska.putObject(3, 5, doska.CellType.Rabbit)
 
     running = True
     while running:
@@ -40,19 +58,20 @@ def start_game():
         #стираем голову в старом месте
         doska.putObject(doska.x,doska.y, doska.CellType.Empty)
 
-
         ## посчитали новое положение головы
         move()
+
+        # проверили, что игра продолжается
+        game_over = check_gameover()
 
         # поменяли вид экрана
         doska.putObject(doska.x, doska.y, doska.CellType.Head)
 
 
+
         # Refresh game screen
         pygame.display.update()
 
-        # проверили, что игра продолжается
-        game_over = check_gameover()
         if game_over:
             time.sleep(1)
 
@@ -67,6 +86,6 @@ def start_game():
             time.sleep(3)
             running = False
 
-        clock.tick(2)  # limits FPS
+        clock.tick(4)  # limits FPS
 
     pygame.quit()
