@@ -1,26 +1,27 @@
 import pygame
 
+import body
 import doska
 
 
 def go_up():
-    doska.vy = 1
-    doska.vx = 0
+    body.vy = 1
+    body.vx = 0
 
 
 def go_down():
-    doska.vy = -1
-    doska.vx = 0
+    body.vy = -1
+    body.vx = 0
 
 
 def go_left():
-    doska.vy = 0
-    doska.vx = -1
+    body.vy = 0
+    body.vx = -1
 
 
 def go_right():
-    doska.vy = 0
-    doska.vx = 1
+    body.vy = 0
+    body.vx = 1
 
 
 def process_key(key):

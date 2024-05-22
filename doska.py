@@ -7,10 +7,7 @@ yacheika_size = 16  # pixel
 field_height = 25  # cells
 field_width = 25  # cells
 
-x = field_height // 2
-y = field_width // 2
-vx = 0
-vy = 0
+
 
 window_size_x = yacheika_size * (field_width - 1)
 window_size_y = yacheika_size * (field_height - 1)
